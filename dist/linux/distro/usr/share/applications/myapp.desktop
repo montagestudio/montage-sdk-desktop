@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=MyApp
+GenericName=MyApp
+Comment=
+Type=Application
+Icon=/usr/share/myapp/myapp.ico
+Exec=myapp %u
+Terminal=false
+Categories=Application;Network;
+MimeType=x-scheme-handler/myapp;
