@@ -193,7 +193,11 @@ function enableCopyPaste(app) {
 		type: 'normal',
 		label: 'Show/Hide Dev Tools',
 		click: function () {
-			win.showDevTools('toDebug', true);
+			if (!showToolbar) {
+				win.showDevTools();
+			} else {
+				win.closeDevTools();
+			}
 			showToolbar = !showToolbar;
 		} 
 	}));
@@ -432,6 +436,7 @@ function checkForOpen(app, argv) {
 
 
 function initWindowState(app) {
+	console.log(win);
     // Don't resize the window when using LiveReload.
     // There seems to be no way to check whether a window was reopened, so let's
     // check for dev tools - they can't be open on the app start, so if
@@ -548,7 +553,8 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
 		
-		app.update = checkForUpdate(app);
+		// Un comment to check for update on app start
+		//app.update = checkForUpdate(app);
 		
 		app.open = checkForOpen(app, gui.App.argv);
 		
