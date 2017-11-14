@@ -18,9 +18,9 @@
   "main": "app/index.html",
   "appUrl": "https://aurora.montagestudio.com",
   "appScheme": "montage",
-  "version": "0.5.3",
+  "version": "0.0.1",
   "window": {
-    "title": "My App",
+    "title": "MyApp",
     "description": "A re-usable montage wrapper for native desktop app.",
     "icon": "app/img/icon.png",
     "toolbar": false,
