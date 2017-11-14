@@ -9,7 +9,7 @@ module.exports = function(grunt) {
             options: {
                 appName: '<%= pkg.window.title %>',
                 appVersion: '<%= pkg.version %>',
-                version: '0.14.6',
+                version: '0.26.5',
                 cacheDir: './build/cache',
                 buildDir: './build/binaries', // Where the build version of my node-webkit app is saved
                 macIcns: './app/img/icon.icns', // Path to the Mac icon file
