@@ -1,3 +1,7 @@
+/*==================================================
+ * reset
+ * ===============================================*/
+
 html,
 body {
   margin: 0;
@@ -7,16 +11,47 @@ body {
 }
 
 body {
-	  font: 13px/1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif;
+    font-family: "Clear Sans", sans-serif;
     font-weight: normal;
-    color: #030303;
-    background: #f7f9f9;
-    overflow: hidden;
-
+    overflow: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
+input, input[type="button"], 
+input[type="text"], 
+input[type="reset"], 
+input[type="submit"], 
+textarea {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+/* remove outline*/
+video:focus,
+textarea:focus,
+input:focus,
+a:focus,
+button:focus {
+    outline: 0 !important;
+}
+
+video {
+  z-index: inherit;
+}
+
+/*==================================================
+ * default ui
+ * ===============================================*/
+
+body {
+
+    background: #212f3c url('./../img/bg.jpg') no-repeat;
+    background-size: 100%;
+
+    color: #FFF;
+    font-family: "Clear Sans", sans-serif;
+}
 /*==================================================
  * status
  * ===============================================*/
@@ -27,6 +62,8 @@ body {
 	left: 0;
 	padding: 5px;
 
+  color: #737373;
+  font-size: 0.8em;
   background: #f7f9f9;
   -webkit-border-top-right-radius: 5px;
   -moz-border-radius-topright: 5px;
@@ -43,12 +80,8 @@ body {
  * loader
  * ===============================================*/
 
-#loader {
-
-}
-
-#loader .loader { 
-  
+#loader .loader {
+      
   position: absolute;
   left:0;
   right:0;
@@ -76,7 +109,10 @@ body {
 #iframeLoader .loader { 
   width: 10px;
   height: 10px;
-  border-right: solid 2px #eee;
-  border-top: solid 2px #4477f8;
-  box-shadow: 0 0 0 3px #eee;
+  background: none;
+}
+
+#iframeLoader .loader:before {
+  padding: 0 0 0 3px;
+  content: '•';
 }
