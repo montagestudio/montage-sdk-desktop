@@ -16,11 +16,11 @@
     "npm": "2.15.9"
   },
   "main": "app/index.html",
-  "appUrl": "https://aurora.montagestudio.com",
+  "appUrl": "https://montagejs.github.io/popcorn/",
   "appScheme": "montage",
   "version": "0.0.1",
   "window": {
-    "title": "MyApp",
+    "title": "Montage PopCorn",
     "description": "A re-usable montage wrapper for native desktop app.",
     "icon": "app/img/icon.png",
     "toolbar": false,
@@ -47,7 +47,7 @@
     "grunt-appdmg": "^0.4.0",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-debian-package": "^0.1.13",
-    "grunt-nw-builder": "^3.0.0"
+    "grunt-nw-builder": "^3.1.0"
   },
   "dependencies": {
     "winreg": "^1.2.2"
