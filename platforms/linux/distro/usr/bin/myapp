@@ -1,4 +1,0 @@
-#!/bin/sh
-cd /usr/share/myapp
-#export LD_PRELOAD="./libglfw.so ./libRocketControls.so.1 ./libRocketCore.so.1 ./libRocketDebugger.so.1"
-./MyApp $*
