@@ -16,7 +16,7 @@ module.exports = function(grunt) {
                 mac64: buildPlatforms.mac,
                 win64: buildPlatforms.win,
                 linux64: buildPlatforms.linux64,
-                macPlist: "dist/osx/Info.plist",
+                macPlist: "platforms/osx/Info.plist",
                 //winIco: "./app/img/icon.ico",
                 zip: false,
                 macCredits: false,
@@ -38,7 +38,7 @@ module.exports = function(grunt) {
                 title: '<%= pkg.window.title %>',
                 icon: './app/img/icon.icns',
                 "icon-size": 128,
-                background: './dist/osx/dmg-background.png',
+                background: './platforms/osx/dmg-background.png',
                 contents: [
                     {x: 410, y: 220, type: 'link', path: '/Applications'},
                     {x: 130, y: 220, type: 'file', path: "./build/binaries/<%= pkg.version %>/osx64/<%= pkg.window.title %>.app"},
