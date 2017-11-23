@@ -14,7 +14,7 @@ This SDK is built arround NodeWebkit aka "nw.js". NodeWebkit allow developing Cu
 More info about NodeWebkit:
 - http://nwjs.io/
 
-Note: We are currently using nw.js version 0.12.3 for stability reason and are preparing migration toward next 0.13.x stable version.  
+Note: We are currently using nw.js version 0.26.5 for stability reason and are preparing migration toward next 0.13.x stable version.  
 
 ## Quick start
 
@@ -47,7 +47,7 @@ $ apt-get install nodejs npm
 [Nodejs](http://nodejs.org/) must be installed before you can use npm, bower or grunt.
 
 ```
-$ npm install -g grunt-cli nw@0.12.3
+$ npm install -g grunt-cli nw@0.26.5
 ```
 
 Run `npm install` in root dir to install grunt and it's dependencies.
