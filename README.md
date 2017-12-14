@@ -47,7 +47,8 @@ $ apt-get install nodejs npm
 [Nodejs](http://nodejs.org/) must be installed before you can use npm, bower or grunt.
 
 ```
-$ npm install -g grunt-cli nw@0.26.5
+$ npm install -g grunt-cli 
+$ npm install -g nw@0.26.5 --nwjs_build_type=sdk
 ```
 
 Run `npm install` in root dir to install grunt and it's dependencies.
@@ -60,9 +61,7 @@ Run node-webkit from the root directory with --debug to enable debugging mode li
 
     $ nw . --debug
 
-Press F12 to display the dev tools. Enjoy!
-
-- Currently Gaze to watch all files and reload the app is disabled due to memory leaks and unstability.
+Open Help > Show/Hide Dev Tool to reload and debug the app.
 
 #### Build
 
