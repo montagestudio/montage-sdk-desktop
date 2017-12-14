@@ -66,10 +66,10 @@ function enableCopyPaste(app) {
 	} else {
 
 		// Create sub-menu
-		var menuItems = new gui.Menu();
+		var mainMenuItems = new gui.Menu();
 
 		// Create 'Quit' menu item
-		menuItems.append(new gui.MenuItem({ 
+		mainMenuItems.append(new gui.MenuItem({ 
 			type: 'normal',
 			label: 'Quit',
 			key: 'q',
@@ -81,14 +81,12 @@ function enableCopyPaste(app) {
 
 		menu.append(new gui.MenuItem({
 	        label: 'File',
-	        submenu: menuItems
+	        submenu: mainMenuItems
 	    }));
 	}
 
 	// Create sub-menu
 	var menuItems = new gui.Menu();
-
-
 	menuItems.append(new gui.MenuItem({ 
 		label: 'Maximize Window',
 		key: 'm',
@@ -500,8 +498,8 @@ function dumpWindowState(app) {
 function restoreWindowState() {
     // deltaHeight already saved, so just restore it and adjust window height
     if (deltaHeight !== 'disabled' && typeof winState.deltaHeight !== 'undefined') {
-        deltaHeight = winState.deltaHeight
-        winState.height = winState.height - deltaHeight
+        deltaHeight = winState.deltaHeight;
+        winState.height = winState.height - deltaHeight;
     }
 
     var screens = gui.Screen.screens;
