@@ -12,11 +12,12 @@
   "homepage": "https://github.com/montagestudio/montage-sdk-desktop#README.md",
   "private": true,
   "engines": {
-    "node": "4.5",
-    "npm": "2.15.9"
+    "node": "=>4.8",
+    "npm": "=>2.15"
   },
   "main": "app/index.html",
   "appUrl": "https://montagejs.github.io/popcorn/",
+  "docUrl": "http://montagestudio.com/montagejs/",
   "appScheme": "montage",
   "version": "0.0.1",
   "window": {
@@ -36,11 +37,11 @@
     "start": "nw ."
   },
   "chromium-args": "--enable-usermedia-screen-capturing --enable-webrtc-hw-h264-encoding --enable-webvr --enable-accelerated-vpx-decode --enable-win7-webrtc-hw-h264-decoding --aec-refined-adaptive-filter --agc-startup-min-volume %u",
-  "user-agent": "%name Desktop %ver - %osinfo",
+  "user-agent": "%name Desktop %ver - %osinfo - %nwver - %webkit_ver",
   "webkit": {
     "plugin": false,
     "java": false,
-    "page-cache": false
+    "page-cache": true
   },
   "devDependencies": {
     "grunt": "^1.0.1",
