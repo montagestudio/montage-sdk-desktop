@@ -185,7 +185,7 @@ function enableCopyPaste(app) {
 	menuItems.append(new gui.MenuItem({ 
 		label: 'Reload App',
 		click: function() { 
-			app.onOpen(app.appUrl, true);
+			app.onOpen(app.url, true);
 		} 
 	}));
 
