@@ -193,7 +193,7 @@ function enableCopyPaste(app) {
 		type: 'separator'
 	}));
 
-	// Create 'Check for update' menu item
+	// Create 'Console' menu item
 	var showToolbar = false;
 	menuItems.append(new gui.MenuItem({ 
 		type: 'normal',
