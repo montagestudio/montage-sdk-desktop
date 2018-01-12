@@ -41,7 +41,8 @@
     "build:win": "grunt build --platforms=win32,win64",
     "build:mac": "grunt build --platforms=mac64",
     "build:linux": "grunt build --platforms=linux32,linux64",
-    "package": "grunt package"
+    "package": "grunt package",
+    "publish": "git checkout gh-pages && git subtree push --prefix dist origin gh-pages"
   },
   "chromium-args": "--enable-usermedia-screen-capturing --enable-webrtc-hw-h264-encoding --enable-webvr --enable-accelerated-vpx-decode --enable-win7-webrtc-hw-h264-decoding --aec-refined-adaptive-filter --agc-startup-min-volume %u",
   "user-agent": "%name Desktop %ver - %osinfo - %nwver - %webkit_ver",
@@ -54,11 +55,14 @@
     "grunt": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-debian-package": "^0.1.13",
-    "grunt-nw-builder": "^3.1.0"
+    "grunt-exec": "^3.0.0",
+    "grunt-nw-builder": "^3.1.0",
+    "grunt-rcedit": "^0.7.0",
+    "nw-builder": "^3.5.1"
   },
   "optionalDDependencies": {
     "grunt-appdmg": "^0.4.0"
-  },  
+  },
   "dependencies": {
     "winreg": "^1.2.2"
   }

@@ -23,12 +23,6 @@ module.exports = function(grunt) {
                 winIco: "./app/img/icon.ico",
                 zip: false,
                 macCredits: false,
-                winVersionString: {
-                  'ProductName': '<%= pkg.window.title %>',
-                  'FileDescription': '<%= pkg.window.title %>',
-                  'CompanyName': '<%= pkg.author %>',
-                  'LegalCopyright': '<%= pkg.license %>',
-                },
                 buildType: function () {
                     return this.appVersion;
                 }
@@ -40,6 +34,47 @@ module.exports = function(grunt) {
                 '!./node_modules/**',
                 '!./README.md'
             ]
+        },
+
+        rcedit: {
+            exes: {
+                files: [{
+                    expand: true,
+                    cwd: './build/binaries/',
+                    src: ['**/<%= pkg.window.title %>.exe']
+                }],
+                options: {
+                    'icon': './app/img/icon.ico',
+                    'file-version': '<%= pkg.version %>',
+                    'product-version': '<%= pkg.version %>',
+                    'version-string': {
+                        'ProductName': '<%= pkg.window.title %>',
+                        'FileDescription': '<%= pkg.window.title %>',
+                        'CompanyName': '<%= pkg.author %>',
+                        'LegalCopyright': '<%= pkg.license %>'
+                    }
+                }
+            }
+        },
+
+        exec: {
+
+            win64: {
+              command: "wine ~/.wine/drive_c/Program\\ Files\\ \\(x86\\)/Inno\\ Setup\\ 5/ISCC.exe /cc platforms/windows/windows-installer-x64.iss",
+                stdout: true,
+                stderr: true
+            },
+
+            win32: {
+              command: "wine ~/.wine/drive_c/Program\\ Files\\ \\(x86\\)/Inno\\ Setup\\ 5/ISCC.exe /cc platforms/windows/windows-installer-x86.iss",
+                stdout: true,
+                stderr: true
+            },
+            linux: {
+              command: "cd platforms/linux && sh fpm.sh",
+                stdout: true,
+                stderr: true
+            },
         },
 
         appdmg: {
@@ -63,8 +98,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-nw-builder');
     grunt.loadNpmTasks('grunt-appdmg');
     grunt.loadNpmTasks('grunt-debian-package');
+    grunt.loadNpmTasks('grunt-rcedit');
+    grunt.loadNpmTasks('grunt-exec');
 
-    grunt.registerTask('package', ['appdmg']);
+    grunt.registerTask('package:linux', ['exec:linux']);
+    grunt.registerTask('package:mac', ['appdmg']);
+    grunt.registerTask('package:win', ['rcedit', 'exec:win32', 'exec:win64']);
+    grunt.registerTask('package', ['package:win', 'package:mac']);
     grunt.registerTask('build', ['nwjs']);
 
 };
