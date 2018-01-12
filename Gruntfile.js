@@ -10,16 +10,25 @@ module.exports = function(grunt) {
                 appName: '<%= pkg.window.title %>',
                 appVersion: '<%= pkg.version %>',
                 version: '0.26.5',
+                flavor: 'sdk',
                 cacheDir: './build/cache',
                 buildDir: './build/binaries', // Where the build version of my node-webkit app is saved
                 macIcns: './app/img/icon.icns', // Path to the Mac icon file
                 mac64: buildPlatforms.mac,
-                win64: buildPlatforms.win,
-                linux64: buildPlatforms.linux64,
-                macPlist: "platforms/osx/Info.plist",
-                //winIco: "./app/img/icon.ico",
+                win64: buildPlatforms.win64,
+                win32: buildPlatforms.win32,
+                linux64: buildPlatforms.linux64,    
+                linux32: buildPlatforms.linux32,
+                macPlist: "./platforms/osx/Info.plist",
+                winIco: "./app/img/icon.ico",
                 zip: false,
                 macCredits: false,
+                winVersionString: {
+                  'ProductName': '<%= pkg.window.title %>',
+                  'FileDescription': '<%= pkg.window.title %>',
+                  'CompanyName': '<%= pkg.author %>',
+                  'LegalCopyright': '<%= pkg.license %>',
+                },
                 buildType: function () {
                     return this.appVersion;
                 }
@@ -27,8 +36,8 @@ module.exports = function(grunt) {
             src: [
                 './package.json',
                 './app/**/*',
-                './node_modules/**',
-                '!./node_modules/grunt*/**',
+                './node_modules/winreg/**/*',
+                '!./node_modules/**',
                 '!./README.md'
             ]
         },
@@ -73,7 +82,8 @@ var parseBuildPlatforms = function(argumentPlatform) {
 
     var buildPlatforms = {
         mac: /mac/.test(inputPlatforms) || buildAll,
-        win: /win/.test(inputPlatforms) || buildAll,
+        win64: /win64/.test(inputPlatforms) || buildAll,
+        win32: /win32/.test(inputPlatforms) || buildAll,
         linux32: /linux32/.test(inputPlatforms) || buildAll,
         linux64: /linux64/.test(inputPlatforms) || buildAll
     };

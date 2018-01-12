@@ -1,5 +1,6 @@
 {
   "name": "montage-sdk-desktop",
+  "version": "0.0.1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/montagestudio/montage-sdk-desktop.git"
@@ -18,8 +19,8 @@
   "main": "app/index.html",
   "appUrl": "https://montagejs.github.io/popcorn/",
   "docUrl": "http://montagestudio.com/montagejs/",
+  "updateUrl": "",
   "appScheme": "montage",
-  "version": "0.0.1",
   "window": {
     "title": "Montage PopCorn",
     "description": "A re-usable montage wrapper for native desktop app.",
@@ -34,7 +35,13 @@
     "position": "center"
   },
   "scripts": {
-    "start": "nw ."
+    "start": "nw .",
+    "build": "grunt build",
+    "build:all": "grunt build --platforms=all",
+    "build:win": "grunt build --platforms=win32,win64",
+    "build:mac": "grunt build --platforms=mac64",
+    "build:linux": "grunt build --platforms=linux32,linux64",
+    "package": "grunt package"
   },
   "chromium-args": "--enable-usermedia-screen-capturing --enable-webrtc-hw-h264-encoding --enable-webvr --enable-accelerated-vpx-decode --enable-win7-webrtc-hw-h264-decoding --aec-refined-adaptive-filter --agc-startup-min-volume %u",
   "user-agent": "%name Desktop %ver - %osinfo - %nwver - %webkit_ver",
@@ -45,11 +52,13 @@
   },
   "devDependencies": {
     "grunt": "^1.0.1",
-    "grunt-appdmg": "^0.4.0",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-debian-package": "^0.1.13",
     "grunt-nw-builder": "^3.1.0"
   },
+  "optionalDDependencies": {
+    "grunt-appdmg": "^0.4.0"
+  },  
   "dependencies": {
     "winreg": "^1.2.2"
   }
