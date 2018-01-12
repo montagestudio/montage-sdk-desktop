@@ -1,6 +1,6 @@
 ; Installer Variables
 #define AppName "Montage PopCorn"
-#define AppScheme "popcorn"
+#define AppScheme "montage"
 #define AppVersion "0.0.1"
 #define AppPublisher "Kaazing Corp"
 #define AppURL "https://montagejs.github.io/popcorn/"
@@ -9,7 +9,7 @@
 
 [Setup]
 ; DON'T FUCK WITH THE APPID. This uniquely identifies this application, which is used to find the app if we need to update it.
-AppId={{F4B2C5C1-F084-4858-B9C3-E641F5C12BBC}
+AppId={{F4B2C5C1-F084-4858-B9C3-E641F5C12BBK}
 
 AppName={#AppName}
 AppVersion={#AppVersion}
@@ -126,10 +126,10 @@ Filename: "{app}\bin\{#AppName}.exe"; Parameters: """{app}\www"""; Description: 
 ; HKU	(HKEY_USERS)
 ; HKCC	(HKEY_CURRENT_CONFIG)
 ;
-Root: HKCU; Subkey: "{#AppScheme}"; ValueType: "string"; ValueData: "URL:Custom Protocol"; Flags: uninsdeletekey
-Root: HKCU; Subkey: "{#AppScheme}"; ValueType: "string"; ValueName: "URL Protocol"; ValueData: ""
-Root: HKCU; Subkey: "{#AppScheme}\DefaultIcon"; ValueType: "string"; ValueData: "{app}\www\app\img\icon.ico"
-Root: HKCU; Subkey: "{#AppScheme}\shell\open\command"; ValueType: "string"; ValueData: """{app}\bin\{#AppName}.exe"" ""{app}\www"" ""%1"""
+Root: HKCR; Subkey: "{#AppScheme}"; ValueType: "string"; ValueData: "URL:Custom Protocol"; Flags: uninsdeletekey
+Root: HKCR; Subkey: "{#AppScheme}"; ValueType: "string"; ValueName: "URL Protocol"; ValueData: ""
+Root: HKCR; Subkey: "{#AppScheme}\DefaultIcon"; ValueType: "string"; ValueData: "{app}\www\app\img\icon.ico"
+Root: HKCR; Subkey: "{#AppScheme}\shell\open\command"; ValueType: "string"; ValueData: """{app}\bin\{#AppName}.exe"" ""{app}\www"" ""%1"""
 
 [Code]
 function GetDefaultDirName(Param: string): string;
