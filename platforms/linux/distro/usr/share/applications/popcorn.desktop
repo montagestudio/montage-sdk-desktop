@@ -1,11 +1,11 @@
 [Desktop Entry]
 Version=1.0
-Name=MyApp
-GenericName=MyApp
+Name=Popcorn
+GenericName=Popcorn
 Comment=
 Type=Application
-Icon=/usr/share/myapp/myapp.ico
-Exec=myapp %u
+Icon=/usr/share/Popcorn/Popcorn.ico
+Exec=Popcorn %u
 Terminal=false
 Categories=Application;Network;
-MimeType=x-scheme-handler/myapp;
+MimeType=x-scheme-handler/montage;
