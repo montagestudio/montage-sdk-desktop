@@ -1,11 +1,11 @@
 [Desktop Entry]
 Version=1.0
-Name=Popcorn
-GenericName=Popcorn
+Name=Montage Popcorn
+GenericName=Montage-Popcorn
 Comment=
 Type=Application
-Icon=/usr/share/Popcorn/Popcorn.ico
-Exec=Popcorn %u
+Icon=/usr/share/Montage-Popcorn/Montage-Popcorn.ico
+Exec=Montage-Popcorn %u
 Terminal=false
 Categories=Application;Network;
 MimeType=x-scheme-handler/montage;

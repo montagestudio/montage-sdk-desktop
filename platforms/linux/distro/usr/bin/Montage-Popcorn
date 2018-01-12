@@ -1,4 +1,4 @@
 #!/bin/sh
-cd /usr/share/Popcorn
+cd /usr/share/Montage-Popcorn
 #export LD_PRELOAD="./libglfw.so ./libRocketControls.so.1 ./libRocketCore.so.1 ./libRocketDebugger.so.1"
-./Popcorn $*
+./Montage-Popcorn $*
