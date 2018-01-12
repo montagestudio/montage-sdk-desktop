@@ -44,7 +44,7 @@ $ apt-get install nodejs npm
 * NPM - Node.js package manager, should be installed when you install node.js.
 * Grunt - Download and Install [Grunt](http://gruntjs.com).
 
-[Nodejs](http://nodejs.org/) must be installed before you can use npm, bower or grunt.
+[Nodejs](http://nodejs.org/) must be installed before you can use npm or grunt.
 
 ```
 $ npm install -g grunt-cli 
