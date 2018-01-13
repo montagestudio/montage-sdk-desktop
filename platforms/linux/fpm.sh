@@ -13,12 +13,11 @@ export MAINTENER='Harold Thetiot <harold.thetiot@kaazing.com>'
 # TODO dynamic path
 BASEDIR=$(dirname "$0")
 export APP_PATH="$BASEDIR/../.."
+export APP_PATH='/Users/harold/projects/Kaazing/demos/montage-sdk-desktop/'
 export BUILD_PATH="$APP_PATH/build"
-export TMP_PATH="$BASEDIR/tmp"
 #clean
 rm -fr $BUILD_PATH/releases/*.deb
 rm -fr $BUILD_PATH/releases/*.rpm
-export APP_PATH='/Users/harold/projects/Kaazing/demos/montage-sdk-desktop/'
 # start
 rm -fr tmp
 #deb64

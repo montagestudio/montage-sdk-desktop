@@ -40,7 +40,7 @@ DisableWelcomePage=no
 
 ; No UAC bullshit
 ;http://www.jrsoftware.org/ishelp/index.php?topic=setup_privilegesrequired
-PrivilegesRequired=lowest
+PrivilegesRequired=none
 ; Put the uninstaller in the same folder, or else it'll go into Program Files, which requires Admin Privileges
 UninstallFilesDir={app}
 
