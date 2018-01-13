@@ -42,6 +42,10 @@
     "build:mac": "grunt build --platforms=mac64",
     "build:linux": "grunt build --platforms=linux32,linux64",
     "package": "grunt package",
+    "package:linux": "grunt package:linux",
+    "package:win": "grunt package:win",
+    "package:mac": "grunt package:mac",
+    "package:all": "grunt package:all",
     "publish": "git checkout gh-pages && git subtree push --prefix dist origin gh-pages"
   },
   "chromium-args": "--enable-usermedia-screen-capturing --enable-webrtc-hw-h264-encoding --enable-webvr --enable-accelerated-vpx-decode --enable-win7-webrtc-hw-h264-decoding --aec-refined-adaptive-filter --agc-startup-min-volume %u",
