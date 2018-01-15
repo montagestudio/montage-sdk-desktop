@@ -68,7 +68,7 @@
     "grunt-rcedit": "^0.7.0",
     "nw-builder": "^3.5.1"
   },
-  "optionalDDependencies": {
+  "optionalDependencies": {
     "grunt-appdmg": "^0.4.0"
   },
   "dependencies": {

@@ -81,6 +81,14 @@ You can also build for all platforms with:
 
 ## Troubleshooting
 
+### Full build Packages Prerequisites
+
+TODO
+
+Note: Windows signing certificates for ~$178/year
+- https://docs.microsoft.com/en-us/windows-hardware/drivers/dashboard/get-a-code-signing-certificate
+- https://www.digicert.com/code-signing/digicert-certificate-utility-to-sign-code.htm
+
 ### What are package.json chromium-args possible values?
 - http://peter.sh/experiments/chromium-command-line-switches/
 
