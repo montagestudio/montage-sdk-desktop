@@ -104,6 +104,8 @@ module.exports = function(grunt) {
     grunt.registerTask('package:linux', ['exec:linux']);
     grunt.registerTask('package:mac', ['appdmg']);
     grunt.registerTask('package:win', ['rcedit', 'exec:win32', 'exec:win64']);
+    grunt.registerTask('package:win32', ['rcedit', 'exec:win32']);
+    grunt.registerTask('package:win64', ['rcedit', 'exec:win64']);
     grunt.registerTask('package', ['package:win', 'package:mac']);
     grunt.registerTask('build', ['nwjs']);
 
