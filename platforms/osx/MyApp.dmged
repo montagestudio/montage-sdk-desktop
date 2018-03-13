@@ -57,7 +57,7 @@
         <relationship name="eula" type="1/1" destination="EULA"></relationship>
     </object>
     <object type="SETTING" id="z105">
-        <attribute name="picture" type="string">/Users/hthetiot/projects/Kaazing/new/montage-sdk-desktop/dist/osx/dmg-background.png</attribute>
+        <attribute name="picture" type="string">/Users/hthetiot/projects/Kaazing/new/montage-sdk-desktop/platforms/osx/dmg-background.png</attribute>
         <attribute name="winwidth" type="int32">482</attribute>
         <attribute name="winheight" type="int32">437</attribute>
         <attribute name="icon" type="string">/Users/hthetiot/projects/Kaazing/new/montage-sdk-desktop/app/img/icon.icns</attribute>

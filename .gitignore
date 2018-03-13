@@ -5,4 +5,7 @@ node_modules/
 .DS_Store
 .idea
 
+build/cache
+build/binaries
+build/releases
 cache/*

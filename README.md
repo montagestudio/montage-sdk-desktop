@@ -14,7 +14,7 @@ This SDK is built arround NodeWebkit aka "nw.js". NodeWebkit allow developing Cu
 More info about NodeWebkit:
 - http://nwjs.io/
 
-Note: We are currently using nw.js version 0.12.3 for stability reason and are preparing migration toward next 0.13.x stable version.  
+Note: We are currently using nw.js version 0.26.5 for stability reason and are preparing migration toward next 0.13.x stable version.  
 
 ## Quick start
 
@@ -44,10 +44,11 @@ $ apt-get install nodejs npm
 * NPM - Node.js package manager, should be installed when you install node.js.
 * Grunt - Download and Install [Grunt](http://gruntjs.com).
 
-[Nodejs](http://nodejs.org/) must be installed before you can use npm, bower or grunt.
+[Nodejs](http://nodejs.org/) must be installed before you can use npm or grunt.
 
 ```
-$ npm install -g grunt-cli nw@0.12.3
+$ npm install -g grunt-cli 
+$ npm install -g nw@0.26.5 --nwjs_build_type=sdk
 ```
 
 Run `npm install` in root dir to install grunt and it's dependencies.
@@ -60,9 +61,7 @@ Run node-webkit from the root directory with --debug to enable debugging mode li
 
     $ nw . --debug
 
-Press F12 to display the dev tools. Enjoy!
-
-- Currently Gaze to watch all files and reload the app is disabled due to memory leaks and unstability.
+Open Help > Show/Hide Dev Tool to reload and debug the app.
 
 #### Build
 
@@ -81,6 +80,14 @@ You can also build for all platforms with:
     $ grunt build --platforms=all
 
 ## Troubleshooting
+
+### Full build Packages Prerequisites
+
+TODO
+
+Note: Windows signing certificates for ~$178/year
+- https://docs.microsoft.com/en-us/windows-hardware/drivers/dashboard/get-a-code-signing-certificate
+- https://www.digicert.com/code-signing/digicert-certificate-utility-to-sign-code.htm
 
 ### What are package.json chromium-args possible values?
 - http://peter.sh/experiments/chromium-command-line-switches/

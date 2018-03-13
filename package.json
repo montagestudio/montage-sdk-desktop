@@ -1,5 +1,6 @@
 {
   "name": "montage-sdk-desktop",
+  "version": "0.0.1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/montagestudio/montage-sdk-desktop.git"
@@ -12,15 +13,16 @@
   "homepage": "https://github.com/montagestudio/montage-sdk-desktop#README.md",
   "private": true,
   "engines": {
-    "node": "4.5",
-    "npm": "2.15.9"
+    "node": "=>4.8",
+    "npm": "=>2.15"
   },
   "main": "app/index.html",
-  "appUrl": "https://aurora.montagestudio.com",
+  "appUrl": "https://montagejs.github.io/popcorn/",
+  "docUrl": "http://montagestudio.com/montagejs/",
+  "updateUrl": "",
   "appScheme": "montage",
-  "version": "0.0.1",
   "window": {
-    "title": "MyApp",
+    "title": "Montage PopCorn",
     "description": "A re-usable montage wrapper for native desktop app.",
     "icon": "app/img/icon.png",
     "toolbar": false,
@@ -33,21 +35,41 @@
     "position": "center"
   },
   "scripts": {
-    "start": "nw ."
+    "start": "nw .",
+    "build": "grunt build",
+    "build:all": "grunt build --platforms=all",
+    "build:win": "grunt build --platforms=win32,win64",
+    "build:win64": "grunt build --platforms=win64",
+    "build:win32": "grunt build --platforms=win32",
+    "build:mac": "grunt build --platforms=mac64",
+    "build:linux": "grunt build --platforms=linux32,linux64",
+    "package": "grunt package",
+    "package:linux": "grunt package:linux",
+    "package:win": "grunt package:win",
+    "package:win64": "grunt package:win64",
+    "package:win32": "grunt package:win32",
+    "package:mac": "grunt package:mac",
+    "package:all": "grunt package:all",
+    "publish": "git checkout gh-pages && git subtree push --prefix dist origin gh-pages"
   },
   "chromium-args": "--enable-usermedia-screen-capturing --enable-webrtc-hw-h264-encoding --enable-webvr --enable-accelerated-vpx-decode --enable-win7-webrtc-hw-h264-decoding --aec-refined-adaptive-filter --agc-startup-min-volume %u",
-  "user-agent": "%name Desktop %ver - %osinfo",
+  "user-agent": "%name Desktop %ver - %osinfo - %nwver - %webkit_ver",
   "webkit": {
     "plugin": false,
     "java": false,
-    "page-cache": false
+    "page-cache": true
   },
   "devDependencies": {
     "grunt": "^1.0.1",
-    "grunt-appdmg": "^0.4.0",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-debian-package": "^0.1.13",
-    "grunt-nw-builder": "^3.0.0"
+    "grunt-exec": "^3.0.0",
+    "grunt-nw-builder": "^3.1.0",
+    "grunt-rcedit": "^0.7.0",
+    "nw-builder": "^3.5.1"
+  },
+  "optionalDependencies": {
+    "grunt-appdmg": "^0.4.0"
   },
   "dependencies": {
     "winreg": "^1.2.2"

@@ -66,14 +66,14 @@ function enableCopyPaste(app) {
 	} else {
 
 		// Create sub-menu
-		var menuItems = new gui.Menu();
+		var mainMenuItems = new gui.Menu();
 
 		// Create 'Quit' menu item
-		menuItems.append(new gui.MenuItem({ 
+		mainMenuItems.append(new gui.MenuItem({ 
 			type: 'normal',
 			label: 'Quit',
 			key: 'q',
-			modifiers: "ctrl+alt",
+			modifiers: "Command",
 			click: function() { 
 				gui.App.quit();
 			}
@@ -81,16 +81,16 @@ function enableCopyPaste(app) {
 
 		menu.append(new gui.MenuItem({
 	        label: 'File',
-	        submenu: menuItems
+	        submenu: mainMenuItems
 	    }));
 	}
 
 	// Create sub-menu
 	var menuItems = new gui.Menu();
-
-
 	menuItems.append(new gui.MenuItem({ 
 		label: 'Maximize Window',
+		key: 'm',
+		modifiers: "Command",
 		click: function() { 
 			win.leaveFullscreen();
 			asyncCall(function () {
@@ -132,6 +132,8 @@ function enableCopyPaste(app) {
 
 	menuItems.append(new gui.MenuItem({ 
 		label: 'Toggle Full Screen',
+		key: 'f',
+		modifiers: "Command",
 		click: function() {
 			win.restore(); 
 			asyncCall(function () {
@@ -148,19 +150,14 @@ function enableCopyPaste(app) {
 	// Create sub-menu
 	var menuItems = new gui.Menu();
 	
-	menuItems.append(new gui.MenuItem({ 
-		label: 'Questions',
-		click: function() { 
-			gui.Shell.openExternal(app.url + "/help#faq");
-		} 
-	}));
-	
-	menuItems.append(new gui.MenuItem({ 
-		label: 'Support',
-		click: function() { 
-			gui.Shell.openExternal(app.url + "/support");
-		} 
-	}));
+	if (manifest.docUrl) {
+		menuItems.append(new gui.MenuItem({ 
+			label: 'Documentation',
+			click: function() { 
+				gui.Shell.openExternal(manifest.docUrl);
+			} 
+		}));	
+	}
 
 	menuItems.append(new gui.MenuItem({
 		type: 'separator'
@@ -169,6 +166,8 @@ function enableCopyPaste(app) {
 	// Create 'Check for update' menu item
 	menuItems.append(new gui.MenuItem({ 
 		type: 'normal',
+		key: 'u',
+		modifiers: "Command",
 		label: 'Check for update',
 		click: function () {
 			checkForUpdate(app);
@@ -183,15 +182,24 @@ function enableCopyPaste(app) {
 		} 
 	}));
 
+	menuItems.append(new gui.MenuItem({ 
+		label: 'Reload App',
+		click: function() { 
+			app.onOpen(app.url, true);
+		} 
+	}));
+
 	menuItems.append(new gui.MenuItem({
 		type: 'separator'
 	}));
 
-	// Create 'Check for update' menu item
+	// Create 'Console' menu item
 	var showToolbar = false;
 	menuItems.append(new gui.MenuItem({ 
 		type: 'normal',
 		label: 'Show/Hide Dev Tools',
+		key: 'i',
+		modifiers: "alt+Command",
 		click: function () {
 			if (!showToolbar) {
 				win.showDevTools();
@@ -490,8 +498,8 @@ function dumpWindowState(app) {
 function restoreWindowState() {
     // deltaHeight already saved, so just restore it and adjust window height
     if (deltaHeight !== 'disabled' && typeof winState.deltaHeight !== 'undefined') {
-        deltaHeight = winState.deltaHeight
-        winState.height = winState.height - deltaHeight
+        deltaHeight = winState.deltaHeight;
+        winState.height = winState.height - deltaHeight;
     }
 
     var screens = gui.Screen.screens;
@@ -630,7 +638,7 @@ var app = {
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
-    onOpen: function(newSrc) {
+    onOpen: function(newSrc, force) {
 
     	console.log('onOpen', newSrc);
 	
@@ -676,7 +684,7 @@ var app = {
 		
 		// compare with iframe current location to avoid loop	
 		// and exclude all sub state/path change 
-		if (iframeSrc.indexOf(newSrc) === 0) {
+		if (force !== true && iframeSrc.indexOf(newSrc) === 0) {
 			return;
 		}
 
