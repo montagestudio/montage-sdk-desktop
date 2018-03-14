@@ -66,10 +66,10 @@ function enableCopyPaste(app) {
 	} else {
 
 		// Create sub-menu
-		var mainMenuItems = new gui.Menu();
+		var menuItems = new gui.Menu({ type: 'menubar' });
 
 		// Create 'Quit' menu item
-		mainMenuItems.append(new gui.MenuItem({ 
+		menuItems.append(new gui.MenuItem({ 
 			type: 'normal',
 			label: 'Quit',
 			key: 'q',
@@ -81,19 +81,21 @@ function enableCopyPaste(app) {
 
 		menu.append(new gui.MenuItem({
 	        label: 'File',
-	        submenu: mainMenuItems
+	        submenu: menuItems
 	    }));
 	}
 
 	// Create sub-menu
-	var menuItems = new gui.Menu();
-	menuItems.append(new gui.MenuItem({ 
+	var windowMenuItems = new gui.Menu();
+
+	windowMenuItems.append(new gui.MenuItem({ 
 		label: 'Maximize Window',
 		key: 'm',
 		modifiers: "Command",
 		click: function() { 
-			win.leaveFullscreen();
+    		win.leaveFullscreen();
 			asyncCall(function () {
+				win.show();
 				win.restore(); 
 				asyncCall(function () {
 					win.maximize();
@@ -102,21 +104,41 @@ function enableCopyPaste(app) {
 		} 
 	}));
 
-	menuItems.append(new gui.MenuItem({ 
+	windowMenuItems.append(new gui.MenuItem({ 
 		label: 'Minimize Window',
 		click: function() {
-			win.leaveFullscreen(); 
+    		win.leaveFullscreen(); 
 			asyncCall(function () {
 				win.minimize();
 			}); 
 		} 
+	}));	
+
+	windowMenuItems.append(new gui.MenuItem({
+		type: 'separator'
 	}));
 
-	menuItems.append(new gui.MenuItem({ 
+	var visibleWindow = true;
+	windowMenuItems.append(new nw.MenuItem({ 
+		label: 'Hide/Show Window',
+		click: function() { 
+
+			visibleWindow = !visibleWindow;
+    		if (visibleWindow) {
+    			win.show();
+				win.restore(); 
+    		} else {
+    			win.hide();
+    		}
+		}
+	}));
+
+	windowMenuItems.append(new gui.MenuItem({ 
 		label: 'Reset Window',
 		click: function() {
 			win.leaveFullscreen();
 			asyncCall(function () {
+        		win.show();
 				win.restore(); 
 				asyncCall(function () {
 					win.resizeTo(manifest.window.width, manifest.window.height);
@@ -126,17 +148,17 @@ function enableCopyPaste(app) {
 		} 
 	}));
 
-	menuItems.append(new gui.MenuItem({
+	windowMenuItems.append(new gui.MenuItem({
 		type: 'separator'
 	}));
 
-	menuItems.append(new gui.MenuItem({ 
+	windowMenuItems.append(new gui.MenuItem({ 
 		label: 'Toggle Full Screen',
 		key: 'f',
 		modifiers: "Command",
 		click: function() {
-			win.restore(); 
 			asyncCall(function () {
+				win.show();
 				win.toggleFullscreen();
 			});
 		} 
@@ -144,12 +166,12 @@ function enableCopyPaste(app) {
 
     menu.append(new gui.MenuItem({
         label: 'Window',
-        submenu: menuItems // menu elements from menuItems object
+        submenu: windowMenuItems // menu elements from menuItems object
     }));
 	
 	// Create sub-menu
 	var menuItems = new gui.Menu();
-	
+		
 	if (manifest.docUrl) {
 		menuItems.append(new gui.MenuItem({ 
 			label: 'Documentation',
@@ -158,21 +180,32 @@ function enableCopyPaste(app) {
 			} 
 		}));	
 	}
+	
+	if (manifest.supportUrl) {
+		menuItems.append(new gui.MenuItem({ 
+			label: 'Support',
+			click: function() { 
+				gui.Shell.openExternal(manifest.supportUrl);
+			} 
+		}));	
+	}
 
-	menuItems.append(new gui.MenuItem({
-		type: 'separator'
-	}));
+	if (manifest.supportUrl || manifest.docUrl) {
+		menuItems.append(new gui.MenuItem({
+			type: 'separator'
+		}));
+	}
 
 	// Create 'Check for update' menu item
-	menuItems.append(new gui.MenuItem({ 
-		type: 'normal',
-		key: 'u',
-		modifiers: "Command",
-		label: 'Check for update',
-		click: function () {
-			checkForUpdate(app);
-		} 
-	}));
+	if (manifest.updateUrl) {
+		menuItems.append(new gui.MenuItem({ 
+			type: 'normal',
+			label: 'Check for update',
+			click: function () {
+				checkForUpdate(app);
+			} 
+		}));
+	}
 
 	menuItems.append(new gui.MenuItem({ 
 		label: 'Reset Local Cache',
@@ -182,19 +215,27 @@ function enableCopyPaste(app) {
 		} 
 	}));
 
-	menuItems.append(new gui.MenuItem({ 
-		label: 'Reload App',
-		click: function() { 
-			app.onOpen(app.url, true);
-		} 
-	}));
-
 	menuItems.append(new gui.MenuItem({
 		type: 'separator'
 	}));
 
+	// Create 'Open' menu item
+	menuItems.append(new gui.MenuItem({ 
+		type: 'normal',
+		label: 'Open URL',
+		key: 'q',
+		modifiers: "Command",
+		click: function() {
+			var appUrl = window.prompt('Enter URL:');
+			if (appUrl && app.onOpen(appUrl) === false) {
+				alert('Invalid URL');
+			}
+		}
+	}));
+
 	// Create 'Console' menu item
 	var showToolbar = false;
+	var iframeEl = document.getElementById('iframe');
 	menuItems.append(new gui.MenuItem({ 
 		type: 'normal',
 		label: 'Show/Hide Dev Tools',
@@ -202,7 +243,7 @@ function enableCopyPaste(app) {
 		modifiers: "alt+Command",
 		click: function () {
 			if (!showToolbar) {
-				win.showDevTools();
+				win.showDevTools(iframeEl);
 			} else {
 				win.closeDevTools();
 			}
@@ -256,13 +297,13 @@ function enableScreenShare(app) {
 	    	if (event.data === 'is-tablet-mode') {
 				isTabletMode(function (err, isTabletMode) {
 					if (isTabletMode) {
-						event.source.postMessage('montage-is-tablet-mode', '*');
+						event.source.postMessage('sylaps-is-tablet-mode', '*');
 					}
 				});
 
 	        // if browser is asking whether extension is available
 	        } else if(event.data == 'are-you-there') {
-	            event.source.postMessage('montage-extension-loaded', '*');
+	            event.source.postMessage('sylaps-extension-loaded', '*');
 	        
 	        // if it is something that need to be shared with background script
 	        } else if(pending === false && event.data == 'get-sourceId') {
@@ -365,8 +406,10 @@ function versionCompare(v1, v2, options) {
 
 	return 0;
 }
+var checkForUpdateTimer; 
+function checkForUpdate (app) {		
 
-function checkForUpdate (app) {	
+	clearTimeout(checkForUpdateTimer);
 
 	// Load online app after 1 sec anyway
 	function reqTimeout () {
@@ -378,29 +421,44 @@ function checkForUpdate (app) {
 	function reqListener () {
 
 		if (this.responseText) {
+			try {
 
-			var currentManifest = JSON.parse(this.responseText),
-				currentVersion = currentManifest.version;
+				var currentManifest = JSON.parse(this.responseText),
+					currentVersion = currentManifest.version;
 
-			console.info("Installed Version " + currentVersion + " vs " + "Current " + app.version);
+				console.info("Installed Version " + manifest.version + " vs " + "Current " + currentVersion);
 
-			if (versionCompare(app.version, currentVersion) < 0) {
+				if (versionCompare(manifest.version, currentVersion) < 0) {
 
-				gui.App.clearCache();
-			
-				app.onStatus("Update found, new version " + currentVersion + ".");
+					gui.App.clearCache();
+				
+					app.onStatus("New version available for download.");
 
-				// Propose new version via download page
-				var userWantUpdate = window.confirm(
-					'A New version of Montage App is available,' +
-					' would you like to download it now?'
-				);
+					// Propose new version via download page
+					var userWantUpdate = window.confirm(
+						'A New version of "' + manifest.window.title + '" is available, would you like to download it now?'
+					);
 
-				if (userWantUpdate) {
-					gui.Shell.openExternal(app.url + "/download");
+					if (userWantUpdate) {
+						gui.Shell.openExternal(manifest.downloadUrl);
+
+						checkForUpdateTimer = setTimeout(function () {
+							app.onStatus("");
+						}, 30000);
+					} else {
+						app.onStatus("");
+					}
+
+
+				} else {
+					app.onStatus("");
 				}
-			} else {
-				app.onStatus("");
+			} catch (err) {
+				console.error(err);
+				app.onStatus("Unable to check for update. Try again later.");
+				checkForUpdateTimer = setTimeout(function () {
+					app.onStatus("");
+				}, 5000);
 			}
 		}
 	}		
@@ -412,7 +470,7 @@ function checkForUpdate (app) {
 		oReq.timeout = 5000;
 		oReq.onload = reqListener;
 		oReq.ontimeout = reqTimeout;
-		oReq.open("get", app.url + "/downloads/desktop/version.json?t=" + Date.now(), true);
+		oReq.open("get", manifest.updateUrl + "?t=" + Date.now(), true);
 		oReq.send();
 		app.onStatus("Checking for update...");	
 	});
@@ -430,7 +488,7 @@ function checkForUpdate (app) {
 
 function checkForOpen(app, argv) {
 
-	var scheme = app.scheme + ':/',
+	var scheme = manifest.appScheme + ':/',
 		openParam = typeof argv === 'string' ? argv : argv.join(' ') || "",
 		schemeIndex = openParam ? openParam.indexOf(scheme) : -1,
 		hasScheme = schemeIndex > -1;
@@ -444,7 +502,6 @@ function checkForOpen(app, argv) {
 
 
 function initWindowState(app) {
-	console.log(win);
     // Don't resize the window when using LiveReload.
     // There seems to be no way to check whether a window was reopened, so let's
     // check for dev tools - they can't be open on the app start, so if
@@ -495,11 +552,11 @@ function dumpWindowState(app) {
     }
 }
 
-function restoreWindowState() {
+function restoreWindowState(app) {
     // deltaHeight already saved, so just restore it and adjust window height
     if (deltaHeight !== 'disabled' && typeof winState.deltaHeight !== 'undefined') {
-        deltaHeight = winState.deltaHeight;
-        winState.height = winState.height - deltaHeight;
+        deltaHeight = winState.deltaHeight
+        winState.height = winState.height - deltaHeight
     }
 
     var screens = gui.Screen.screens;
@@ -508,14 +565,14 @@ function restoreWindowState() {
         var screen = screens[i];
         if (winState.x > screen.bounds.x && winState.x < screen.bounds.x + screen.bounds.width) {
             if (winState.y > screen.bounds.y && winState.y < screen.bounds.y + screen.bounds.height) {
-                console.debug("Location of window (" + winState.x + "," + winState.y + ") is on screen " + JSON.stringify(screen));
+                //console.debug("Location of window (" + winState.x + "," + winState.y + ") is on screen " + JSON.stringify(screen));
                 locationIsOnAScreen = true;
             }
         }
     }
 
     if (!locationIsOnAScreen) {
-        console.debug("Last saved position of windows is not usable on current monitor setup. Moving window to center!");
+        //console.debug("Last saved position of windows is not usable on current monitor setup. Moving window to center!");
         win.setPosition("center");
     }
     else {
@@ -524,9 +581,9 @@ function restoreWindowState() {
     }
 }
 
-function saveWindowState() {
+function saveWindowState(app) {
 
-    dumpWindowState();
+    dumpWindowState(app);
 
     if (localStorage['windowState'] === 'reset') {
         localStorage['windowState'] = '';
@@ -535,26 +592,40 @@ function saveWindowState() {
     }
 }
 
+function isValidNavigation(app, newUrl) {
+
+	var newUrlParser = document.createElement('a'),
+		allowedUrlParser = document.createElement('a');
+
+	function validateAppUrl(allowedUrl, newUrl) {
+		newUrlParser.href = newUrl;
+		allowedUrlParser.href = allowedUrl;
+		return newUrlParser.protocol && newUrlParser.hostname && (
+				newUrlParser.hostname === allowedUrlParser.hostname ||
+					newUrlParser.hostname.indexOf("." + allowedUrlParser.hostname) > 0 ||
+						allowedUrlParser.hostname.indexOf(allowedUrlParser.hostname.replace("*.", ".")) > 0
+			);
+	}
+
+	return validateAppUrl(manifest.appUrl, newUrl) || 
+			manifest.allowNavigation.filter(function (allowedUrl) {
+				return validateAppUrl(allowedUrl, newUrl)
+			}).length > 0;
+}
+
 var app = {
 
 	url: null,
-	allowNavigation: null,
-	scheme: null,
-	version: null,
 
     // Application Constructor
     initialize: function() {
 
-		app.url = manifest.appUrl;
-		app.scheme = manifest.appScheme;
-		app.version = manifest.version;
-		app.allowNavigation = manifest.allowNavigation || [app.url];
-		
+
 		enableCopyPaste(app);
 		enableScreenShare(app);
 		initWindowState(app);
 
-        this.bindEvents();
+        app.bindEvents();
     },
 
     // Bind Event Listeners
@@ -563,13 +634,12 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
 		
-		// Un comment to check for update on app start
-		//app.update = checkForUpdate(app);
+		app.update = checkForUpdate(app);
 		
 		app.open = checkForOpen(app, gui.App.argv);
 		
 		if (app.open === false) {
-			app.onOpen(app.url);
+			app.onOpen(manifest.appUrl);
 		}
 
 		gui.App.on('open', function (cmdline) {
@@ -631,65 +701,47 @@ var app = {
 		    try {
 		        saveWindowState();
 		    } catch(err) {
-		        console.log("winstateError: " + err);
+		        console.error("winstateError: " + err);
 		    }
 		    win.close(true);
 		});
-    },
-
-    isValidNavigation: function (newSrc) {
-    	return true;
-    	var newUrlParser = document.createElement('a');
-		newSrc = String(newUrlParser.href);
-
-		var appUrlParser = document.createElement('a');
-
-		function validateAppUrl(newSrc) {
-			newUrlParser.href = newSrc;
-			return newUrlParser.hostname === appUrlParser.hostname ||
-				newUrlParser.hostname.indexOf("." + appUrlParser.hostname) <= 0;
-		}
-
-		return validateAppUrl(newSrc) || 
-				app.allowNavigation.filter(function (allowedUrl) {
-					return validateAppUrl(allowedUrl)
-				}).length > 0;
     },
 
     // onopen Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
-    onOpen: function(newSrc, force) {
+    onOpen: function(newSrc) {
 
-    	console.log('onOpen', newSrc);
+    	//console.log('onOpen', newSrc);
 	
 		var iframeEl = document.getElementById('iframe'),
-			iframeSrc = iframeEl.src,
-			orignalSrc = String(newSrc);
-			
+			iframeSrc = iframeEl.src;
+		
 		// package url should be the root of new location
-		if (this.isValidNavigation(newSrc) === false) {
+		if (isValidNavigation(app, newSrc) === false) {
 
 			// Ingore externals
 			if (iframeSrc === 'about:blank') {
 				window.close();
-			} else if (iframeSrc === 'reset-cache') {
-				gui.App.clearCache();
-			}
-
-			return;
+				return false;
 			
-			/*
+			} else if (newSrc === 'reset-cache') {
+				gui.App.clearCache();
+
+				// Continue
+
 			// Open a new window.
-  			gui.Window.open(orignalSrc, {
-  				"focus": true,
-  				"toolbar": true
-  			});
-				
-			// Replace location
-			newSrc = iframeSrc || app.url;
-			*/
+			} else if (newSrc === 'new') {
+	  			gui.Window.open(manifest.appUrl, { 
+	  				new_instance: true,
+	  				transparent: false,
+	  				frame: true
+	  			});
+				return true;
+			} else {
+				return false;
+			}
 
 		} else {
 			window.focus();
@@ -697,13 +749,13 @@ var app = {
 		
 		// compare with iframe current location to avoid loop	
 		// and exclude all sub state/path change 
-		if (force !== true && iframeSrc.indexOf(newSrc) === 0) {
-			return;
+		if (iframeSrc.indexOf(newSrc) === 0) {
+			return newSrc;
 		}
 
 		clearTimeout(app.onOpenTimer);
 		
-		app.onStatus("Loading " + orignalSrc);
+		app.onStatus("Loading " + newSrc);
 			
 		app.onOpenTimer = setTimeout(function() {
 			
@@ -728,18 +780,19 @@ var app = {
 				app.onStatus("");
 
 				// inform browser that you're available!
-				iframeEl.contentWindow.postMessage('montage-extension-loaded', '*');
-
-				console.info("iframeEl.onload", newSrc);
+				iframeEl.contentWindow.postMessage('sylaps-extension-loaded', '*');
+				//console.info("iframeEl.onload", newSrc);
 			};
 			
 			iframeEl.onerror = function (err) {
 				app.showFrameLoader(false);
 				app.onStatus("Error: " + err.message);
-				console.error("iframeEl.onerror", newSr, err);
+				//console.error("iframeEl.onerror", newSr, err);
 			};
 
 		}, 250);
+
+		return newSrc;
     },
 
     showLoader: function (show) {

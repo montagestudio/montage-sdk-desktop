@@ -1,6 +1,8 @@
 {
   "name": "montage-sdk-desktop",
   "version": "0.0.1",
+  "chromiumVersion": "65.0.3325.146",
+  "nwjsVersion": "0.29.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/montagestudio/montage-sdk-desktop.git"
@@ -16,11 +18,11 @@
     "node": "=>4.8",
     "npm": "=>2.15"
   },
-  "chromiumVersion": "65.0.3325.146",
-  "nwjsVersion": "0.29.0",
   "main": "app/index.html",
   "appUrl": "https://montagejs.github.io/popcorn/",
   "docUrl": "http://montagestudio.com/montagejs/",
+  "downloadUrl": "http://montagestudio.github.com/montage-sdk-desktop/",
+  "updateUrl": "http://montagestudio.github.com/montage-sdk-desktop/version.json",
   "allowNavigation": [
     "https://montagejs.github.io/",
     "https://montagestudio.github.io/",
@@ -31,7 +33,6 @@
     "https://*.staging-project.montagestudio.net/",
     "https://*.project.montagestudio.net/"
   ],
-  "updateUrl": "",
   "appScheme": "montage",
   "window": {
     "title": "Montage PopCorn",
