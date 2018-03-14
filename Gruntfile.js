@@ -97,7 +97,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-nw-builder');
     grunt.loadNpmTasks('grunt-appdmg');
-    grunt.loadNpmTasks('grunt-debian-package');
     grunt.loadNpmTasks('grunt-rcedit');
     grunt.loadNpmTasks('grunt-exec');
 
