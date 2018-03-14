@@ -16,6 +16,8 @@
     "node": "=>4.8",
     "npm": "=>2.15"
   },
+  "chromiumVersion": "65.0.3325.146",
+  "nwjsVersion": "0.29.0",
   "main": "app/index.html",
   "appUrl": "https://montagejs.github.io/popcorn/",
   "docUrl": "http://montagestudio.com/montagejs/",
@@ -63,7 +65,7 @@
     "publish": "git checkout gh-pages && git subtree push --prefix dist origin gh-pages",
     "clean": "rm -fr build"
   },
-  "chromium-args": "--enable-gcm --enable-features=NativeNotifications --enable-usermedia-screen-capturing --enable-webrtc-hw-h264-encoding --enable-webvr --enable-accelerated-vpx-decode --enable-win7-webrtc-hw-h264-decoding --aec-refined-adaptive-filter --agc-startup-min-volume %u",
+  "xchromium-args": "--enable-gcm --enable-features=NativeNotifications --enable-usermedia-screen-capturing --enable-webrtc-hw-h264-encoding --enable-webvr --enable-accelerated-vpx-decode --enable-win7-webrtc-hw-h264-decoding --aec-refined-adaptive-filter --agc-startup-min-volume %u",
   "user-agent": "%name/%ver (%osinfo) AppleWebKit/%webkit_ver - Chrome/%chromium_ver nodewebkit/%nwver",
   "webkit": {
     "plugin": false,

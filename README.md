@@ -48,7 +48,7 @@ $ apt-get install nodejs npm
 
 ```
 $ npm install -g grunt-cli 
-$ npm install -g nw@0.26.5 --nwjs_build_type=sdk
+$ npm install -g nw@0.29.0 --nwjs_build_type=sdk
 ```
 
 Run `npm install` in root dir to install grunt and it's dependencies.

@@ -538,6 +538,7 @@ function saveWindowState() {
 var app = {
 
 	url: null,
+	allowNavigation: null,
 	scheme: null,
 	version: null,
 
@@ -547,6 +548,7 @@ var app = {
 		app.url = manifest.appUrl;
 		app.scheme = manifest.appScheme;
 		app.version = manifest.version;
+		app.allowNavigation = manifest.allowNavigation || [app.url];
 		
 		enableCopyPaste(app);
 		enableScreenShare(app);
@@ -634,6 +636,26 @@ var app = {
 		    win.close(true);
 		});
     },
+
+    isValidNavigation: function (newSrc) {
+    	return true;
+    	var newUrlParser = document.createElement('a');
+		newSrc = String(newUrlParser.href);
+
+		var appUrlParser = document.createElement('a');
+
+		function validateAppUrl(newSrc) {
+			newUrlParser.href = newSrc;
+			return newUrlParser.hostname === appUrlParser.hostname ||
+				newUrlParser.hostname.indexOf("." + appUrlParser.hostname) <= 0;
+		}
+
+		return validateAppUrl(newSrc) || 
+				app.allowNavigation.filter(function (allowedUrl) {
+					return validateAppUrl(allowedUrl)
+				}).length > 0;
+    },
+
     // onopen Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
@@ -645,24 +667,15 @@ var app = {
 		var iframeEl = document.getElementById('iframe'),
 			iframeSrc = iframeEl.src,
 			orignalSrc = String(newSrc);
-
-		var newUrlParser = document.createElement('a');
-		newUrlParser.href = newSrc;
-		newSrc = String(newUrlParser.href);
-
-		var appUrlParser = document.createElement('a');
-		appUrlParser.href = app.url;
-		appUrl = String(appUrlParser.href);
 			
 		// package url should be the root of new location
-		if (
-			newUrlParser.hostname !== appUrlParser.hostname &&
-				newUrlParser.hostname.indexOf("." + appUrlParser.hostname) <= 0
-		) {
+		if (this.isValidNavigation(newSrc) === false) {
 
 			// Ingore externals
 			if (iframeSrc === 'about:blank') {
 				window.close();
+			} else if (iframeSrc === 'reset-cache') {
+				gui.App.clearCache();
 			}
 
 			return;
