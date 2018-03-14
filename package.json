@@ -19,7 +19,7 @@
   "chromiumVersion": "65.0.3325.146",
   "nwjsVersion": "0.29.0",
   "main": "app/index.html",
-  "appUrl": "https://montagejs.github.io/popcorn/",
+  "appUrl": "https://work.montagestudio.com/",
   "docUrl": "http://montagestudio.com/montagejs/",
   "allowNavigation": [
     "https://montagejs.github.io/",
@@ -34,7 +34,7 @@
   "updateUrl": "",
   "appScheme": "montage",
   "window": {
-    "title": "Montage PopCorn",
+    "title": "Montage Studio",
     "description": "A re-usable montage wrapper for native desktop app.",
     "icon": "app/img/icon.png",
     "toolbar": false,
