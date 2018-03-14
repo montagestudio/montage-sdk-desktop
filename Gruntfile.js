@@ -20,7 +20,7 @@ module.exports = function(grunt) {
                 linux64: buildPlatforms.linux64,    
                 linux32: buildPlatforms.linux32,
                 macPlist: "./platforms/osx/Info.plist",
-                winIco: "./app/img/icon.ico",
+                //winIco: "./app/img/icon.ico",
                 zip: false,
                 macCredits: false,
                 buildType: function () {
@@ -34,6 +34,38 @@ module.exports = function(grunt) {
                 '!./node_modules/**',
                 '!./README.md'
             ]
+        },
+
+        copy: {
+            ffmpeg: {
+                files: [
+                    {
+                        src: 'libraries/win32/ffmpeg.dll',
+                        dest: 'build/binaries/<%= pkg.version %>/win32/ffmpeg.dll',
+                        flatten: true
+                    },
+                    {
+                        src: 'libraries/win64/ffmpeg.dll',
+                        dest: 'build/binaries/<%= pkg.version %>/win64/ffmpeg.dll',
+                        flatten: true
+                    },
+                    {
+                        src: 'libraries/osx64/libffmpeg.dylib',
+                        dest: 'build/binaries/<%= pkg.version %>/osx64/<%= pkg.window.title %>.app/Contents/Versions/<%= pkg.chromiumVersion %>/libffmpeg.dylib',
+                        flatten: true
+                    },
+                    {
+                        src: 'libraries/linux64/libffmpeg.so',
+                        dest: 'build/binaries/<%= pkg.version %>/linux64/lib/libffmpeg.so',
+                        flatten: true
+                    },
+                    {
+                        src: 'libraries/linux32/libffmpeg.so',
+                        dest: 'build/binaries/<%= pkg.version %>/linux32/lib/libffmpeg.so',
+                        flatten: true
+                    }
+                ]
+            }
         },
 
         rcedit: {
@@ -103,10 +135,8 @@ module.exports = function(grunt) {
     grunt.registerTask('package:linux', ['exec:linux']);
     grunt.registerTask('package:mac', ['appdmg']);
     grunt.registerTask('package:win', ['rcedit', 'exec:win32', 'exec:win64']);
-    grunt.registerTask('package:win32', ['rcedit', 'exec:win32']);
-    grunt.registerTask('package:win64', ['rcedit', 'exec:win64']);
-    grunt.registerTask('package', ['package:win', 'package:mac']);
-    grunt.registerTask('build', ['nwjs']);
+    grunt.registerTask('package:all', ['package:win', 'package:mac', 'package:linux']);
+    grunt.registerTask('build', ['nwjs', 'copy:ffmpeg']);
 
 };
 
@@ -130,4 +160,4 @@ var parseBuildPlatforms = function(argumentPlatform) {
     };
 
     return buildPlatforms;
-}
+};
