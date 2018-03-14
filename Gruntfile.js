@@ -9,7 +9,7 @@ module.exports = function(grunt) {
             options: {
                 appName: '<%= pkg.window.title %>',
                 appVersion: '<%= pkg.version %>',
-                version: '0.26.5',
+                version: '0.29.0',
                 flavor: 'sdk',
                 cacheDir: './build/cache',
                 buildDir: './build/binaries', // Where the build version of my node-webkit app is saved
