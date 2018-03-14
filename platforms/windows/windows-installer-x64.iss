@@ -1,7 +1,7 @@
 ; Installer Variables
 #define AppName "Montage PopCorn"
 #define AppScheme "montage"
-#define AppVersion "0.0.1"
+#define AppVersion "0.0.2"
 #define AppPublisher "Kaazing Corp"
 #define AppURL "https://montagejs.github.io/popcorn/"
 #define AppExeName "run.bat"

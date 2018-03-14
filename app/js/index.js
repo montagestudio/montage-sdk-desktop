@@ -297,13 +297,13 @@ function enableScreenShare(app) {
 	    	if (event.data === 'is-tablet-mode') {
 				isTabletMode(function (err, isTabletMode) {
 					if (isTabletMode) {
-						event.source.postMessage('sylaps-is-tablet-mode', '*');
+						event.source.postMessage('is-tablet-mode', '*');
 					}
 				});
 
 	        // if browser is asking whether extension is available
 	        } else if(event.data == 'are-you-there') {
-	            event.source.postMessage('sylaps-extension-loaded', '*');
+	            event.source.postMessage('extension-loaded', '*');
 	        
 	        // if it is something that need to be shared with background script
 	        } else if(pending === false && event.data == 'get-sourceId') {
@@ -780,7 +780,7 @@ var app = {
 				app.onStatus("");
 
 				// inform browser that you're available!
-				iframeEl.contentWindow.postMessage('sylaps-extension-loaded', '*');
+				iframeEl.contentWindow.postMessage('extension-loaded', '*');
 				//console.info("iframeEl.onload", newSrc);
 			};
 			

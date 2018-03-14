@@ -1,6 +1,6 @@
 {
   "name": "montage-sdk-desktop",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "chromiumVersion": "65.0.3325.146",
   "nwjsVersion": "0.29.0",
   "repository": {

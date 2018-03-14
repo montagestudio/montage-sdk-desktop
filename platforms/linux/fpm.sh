@@ -3,7 +3,7 @@
 # http://standards.freedesktop.org/desktop-entry-spec/latest/ar01s09.html
 # http://unix.stackexchange.com/questions/55214/how-to-override-the-gnome-3-ssh-handler/100736#100736
 # deb64
-export VERSION=0.0.1
+export VERSION=0.0.2
 export NAME='Montage-Popcorn'
 export VENDOR='Kaazing Corp'
 export DESCRIPTION='Montage PopCorn'
@@ -50,7 +50,7 @@ mkdir $TMP_PATH
 mkdir $RPM_PATH
 cp -r distro/* $TMP_PATH/
 cp -r $APP_PATH/build/binaries/$VERSION/linux32/* $TMP_PATH/usr/share/$NAME/
-fpm --rpm-compression--verbose --workdir "${RPM_PATH}" --epoch 0 -a i386 -s dir -t rpm -n "${NAME}" -v "${VERSION}" --vendor "${VENDOR}" --description "${DESCRIPTION}" --url "${URL}"  --license "${LICENCE}" --maintainer "${MAINTENER}" -p "${APP_PATH}/build/releases/${NAME}-${VERSION}.i386.rpm" -C "${TMP_PATH}" usr/share usr/bin
+fpm --verbose --workdir "${RPM_PATH}" --epoch 0 -a i386 -s dir -t rpm -n "${NAME}" -v "${VERSION}" --vendor "${VENDOR}" --description "${DESCRIPTION}" --url "${URL}"  --license "${LICENCE}" --maintainer "${MAINTENER}" -p "${APP_PATH}/build/releases/${NAME}-${VERSION}.i386.rpm" -C "${TMP_PATH}" usr/share usr/bin
 # end
 rm -fr $TMP_PATH
 rm -fr $RPM_PATH
