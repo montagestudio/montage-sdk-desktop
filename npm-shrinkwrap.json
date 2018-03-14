@@ -1,0 +1,14 @@
+{
+	"dependencies": {
+	    "grunt-nw-builder": {
+	      	"version": "3.1.0",
+	     	"from": "grunt-nw-builder@3.1.0",
+	      	"dependencies": {
+	        	"nw-builder": {
+	          		"version": "3.5.1",
+	          		"from": "nw-builder@^3.5.1"
+	        	}
+	      	}
+	    }
+  	}
+}
